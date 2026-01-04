@@ -62,9 +62,11 @@ class FriendsScreen extends StatelessWidget {
               final response = snapshot.data!;
               final users = response.data['users'] as List;
 
-              return ListView.builder(
-                padding: const EdgeInsets.all(0),
+              return ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                 itemCount: users.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
                 itemBuilder: (context, index) {
                   final user = users[index];
                   return FriendCard(

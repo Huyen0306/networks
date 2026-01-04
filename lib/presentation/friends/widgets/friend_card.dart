@@ -48,10 +48,7 @@ class FriendCard extends StatelessWidget {
               children: [
                 Text(
                   fullName,
-                  style: AppFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppFonts.bbhBartle(fontSize: 18),
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 12),
