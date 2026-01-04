@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
         title: Text('Profile', style: AppFonts.bbhBartle(fontSize: 40)),
         suffixes: [
           FAvatar(
-            image: const NetworkImage('https://example.com/profile.jpg'),
+            image: const AssetImage('assets/images/user.png'),
             size: 40.0,
             semanticsLabel: 'User avatar',
             fallback: Text('JD', style: AppFonts.bbhBartle(fontSize: 16)),
