@@ -54,7 +54,7 @@ class FriendCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 FButton(
                   onPress: onViewDetail ?? () {},
-                  style: FButtonStyle.secondary(),
+                  style: FButtonStyle.primary(),
                   child: Text(
                     'Xem chi tiết',
                     style: AppFonts.inter(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/models/post_model.dart';
 import 'package:network/core/theme/app_fonts.dart';
+import 'package:network/presentation/home/widgets/comments_list.dart';
 import 'package:network/presentation/home/widgets/post_card_details.dart';
 
 class PostDetailScreen extends StatelessWidget {
@@ -40,6 +41,8 @@ class PostDetailScreen extends StatelessWidget {
               userId: post.userId,
             ),
             const SizedBox(height: 12),
+            CommentsList(postId: post.id),
+            const SizedBox(height: 12),
             FButton(
               onPress: () => Navigator.of(context).pop(),
               style: FButtonStyle.secondary(),
@@ -67,4 +70,3 @@ class PostDetailScreen extends StatelessWidget {
     );
   }
 }
-

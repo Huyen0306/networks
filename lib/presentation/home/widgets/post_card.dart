@@ -67,7 +67,10 @@ class PostCard extends StatelessWidget {
               runSpacing: 8,
               children: tags.take(3).map((tag) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: context.theme.colors.muted,
                     borderRadius: BorderRadius.circular(8),
@@ -133,13 +136,10 @@ class PostCard extends StatelessWidget {
           // View detail button
           FButton(
             onPress: onViewDetail ?? () {},
-            style: FButtonStyle.secondary(),
+            style: FButtonStyle.primary(),
             child: Text(
               'Xem chi tiết',
-              style: AppFonts.inter(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppFonts.inter(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -147,4 +147,3 @@ class PostCard extends StatelessWidget {
     );
   }
 }
-
