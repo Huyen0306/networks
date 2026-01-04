@@ -43,6 +43,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             const ProfileInfoCard(),
             AutoDarkModeCard(themeProvider: widget.themeProvider),
+            FButton(
+              onPress: () {},
+              style: FButtonStyle.primary(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  spacing: 6,
+                  children: [
+                    Text(
+                      'Đăng xuất',
+                      style: AppFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Icon(FIcons.logOut, size: 16),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
