@@ -62,6 +62,7 @@ class FriendsScreen extends StatelessWidget {
               final users = response.data['users'] as List;
 
               return ListView.builder(
+                padding: const EdgeInsets.all(0),
                 itemCount: users.length,
                 itemBuilder: (context, index) {
                   final user = users[index];
