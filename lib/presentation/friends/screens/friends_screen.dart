@@ -26,7 +26,16 @@ class FriendsScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(child: Text('Friends')),
+      child: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text('Friends')],
+          ),
+        ),
+      ),
     );
   }
 }
