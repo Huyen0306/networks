@@ -15,18 +15,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  int _selectedColorIndex = 0;
-
-  final List<ColorOption> _colors = [
-    ColorOption(color: Colors.blue, isPremium: false),
-    ColorOption(color: Colors.black, isPremium: false),
-    ColorOption(color: Colors.red, isPremium: false),
-    ColorOption(color: Colors.amber, isPremium: true),
-    ColorOption(color: Colors.pink, isPremium: true),
-    ColorOption(color: Colors.teal, isPremium: true),
-    ColorOption(color: Colors.purple, isPremium: true),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return FScaffold(
@@ -60,11 +48,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-}
-
-class ColorOption {
-  final Color color;
-  final bool isPremium;
-
-  ColorOption({required this.color, required this.isPremium});
 }
