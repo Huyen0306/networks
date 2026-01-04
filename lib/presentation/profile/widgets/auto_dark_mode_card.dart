@@ -8,6 +8,10 @@ class AutoDarkModeCard extends StatelessWidget {
 
   const AutoDarkModeCard({super.key, required this.themeProvider});
 
+  static const double _spacingBetween = 16.0;
+  static const double _verticalSpacing = 6.0;
+  static const double _titleFontSize = 16.0;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -23,40 +27,52 @@ class AutoDarkModeCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
             ),
           ),
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'CHUYỂN ĐỔI MÀU NỀN',
-                      style: AppFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Theo dõi màu nền của hệ thống',
-                      style: AppFonts.inter(
-                        color: context.theme.colors.mutedForeground,
-                      ),
-                    ),
-                  ],
+              _buildContent(context),
+              FDivider(
+                style: (style) => style.copyWith(
+                  color: context.theme.colors.border,
+                  width: 0.5,
                 ),
-              ),
-              const SizedBox(width: 16),
-              FSwitch(
-                value: themeProvider.isDarkMode,
-                onChange: (value) {
-                  themeProvider.toggleDarkMode();
-                },
               ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'CHUYỂN ĐỔI MÀU NỀN',
+                style: AppFonts.inter(
+                  fontSize: _titleFontSize,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: _verticalSpacing),
+              Text(
+                'Theo dõi màu nền của hệ thống',
+                style: AppFonts.inter(
+                  color: context.theme.colors.mutedForeground,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: _spacingBetween),
+        FSwitch(
+          value: themeProvider.isDarkMode,
+          onChange: (_) => themeProvider.toggleDarkMode(),
+        ),
+      ],
     );
   }
 }
