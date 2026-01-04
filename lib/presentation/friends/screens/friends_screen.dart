@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/friends/services/friends_service.dart';
+import 'package:network/presentation/friends/widgets/friend_card.dart';
 
 class FriendsScreen extends StatelessWidget {
   const FriendsScreen({super.key});
@@ -66,9 +67,13 @@ class FriendsScreen extends StatelessWidget {
                 itemCount: users.length,
                 itemBuilder: (context, index) {
                   final user = users[index];
-                  return Text(
-                    '${user['firstName']} ${user['lastName']}',
-                    style: AppFonts.inter(fontSize: 16),
+                  return FriendCard(
+                    firstName: user['firstName'] ?? '',
+                    lastName: user['lastName'] ?? '',
+                    imageUrl: user['image'],
+                    onViewDetail: () {
+                      // Xử lý xem chi tiết
+                    },
                   );
                 },
               );
