@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/theme/theme_provider.dart';
 import 'package:network/core/theme/app_fonts.dart';
+import 'package:network/presentation/profile/widgets/theme_option.dart';
 
 class AutoDarkModeCard extends StatelessWidget {
+  // ... (các biến và constructor)
   final ThemeProvider themeProvider;
 
   const AutoDarkModeCard({super.key, required this.themeProvider});
@@ -14,6 +16,7 @@ class AutoDarkModeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ... (build method)
     return AnimatedBuilder(
       animation: themeProvider,
       builder: (context, child) {
@@ -46,25 +49,30 @@ class AutoDarkModeCard extends StatelessWidget {
   }
 
   Widget _buildThemePicker(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 5,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      childAspectRatio: 1,
-      children: AppColorTheme.values.map((theme) {
-        return _ThemeOption(
-          color: _getThemeColor(theme),
-          isSelected: themeProvider.colorTheme == theme,
-          onTap: () => themeProvider.setColorTheme(theme),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double spacing = 12.0;
+        final double itemWidth = (constraints.maxWidth - (spacing * 4)) / 5;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          children: AppColorTheme.values.map((theme) {
+            return SizedBox(
+              width: itemWidth,
+              child: ThemeOption(
+                color: _getThemeColor(theme),
+                isSelected: themeProvider.colorTheme == theme,
+                onTap: () => themeProvider.setColorTheme(theme),
+              ),
+            );
+          }).toList(),
         );
-      }).toList(),
+      },
     );
   }
 
   Color _getThemeColor(AppColorTheme theme) {
-    // ... (giữ nguyên logic màu sắc)
     switch (theme) {
       case AppColorTheme.zinc:
         return FThemes.zinc.light.colors.primary;
@@ -117,60 +125,6 @@ class AutoDarkModeCard extends StatelessWidget {
           onChange: (_) => themeProvider.toggleDarkMode(),
         ),
       ],
-    );
-  }
-}
-
-class _ThemeOption extends StatelessWidget {
-  final Color color;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _ThemeOption({
-    required this.color,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Container(
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: isSelected
-              ? Stack(
-                  children: [
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withAlpha(51), // ~0.2 opacity
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                          ),
-                        ),
-                        child: const Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : null,
-        ),
-      ),
     );
   }
 }
