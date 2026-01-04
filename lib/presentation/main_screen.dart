@@ -39,7 +39,13 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        style: (style) => style,
+        style: (style) => style.copyWith(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(color: context.theme.colors.border, width: 0.5),
+            ),
+          ),
+        ),
         children: [
           FBottomNavigationBarItem(
             icon: const Icon(FIcons.house),
