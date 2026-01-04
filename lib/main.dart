@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:network/core/theme/theme_provider.dart';
 import 'package:network/presentation/main_screen.dart';
 
@@ -41,6 +42,22 @@ class _ApplicationState extends State<Application> {
         final lightTheme = FThemes.blue.light;
         final darkTheme = FThemes.blue.dark;
 
+        // Tạo Material theme với Inter font
+        final lightMaterialTheme = lightTheme
+            .toApproximateMaterialTheme()
+            .copyWith(
+              textTheme: GoogleFonts.interTextTheme(
+                lightTheme.toApproximateMaterialTheme().textTheme,
+              ),
+            );
+        final darkMaterialTheme = darkTheme
+            .toApproximateMaterialTheme()
+            .copyWith(
+              textTheme: GoogleFonts.interTextTheme(
+                darkTheme.toApproximateMaterialTheme().textTheme,
+              ),
+            );
+
         return MaterialApp(
           // Tắt banner debug ở góc trên bên phải
           debugShowCheckedModeBanner: false,
@@ -52,10 +69,10 @@ class _ApplicationState extends State<Application> {
           ],
           // Builder để wrap toàn bộ app với FTheme để sử dụng forui theme
           builder: (_, child) => FTheme(data: theme, child: child!),
-          // Theme cho light mode - chuyển đổi từ forui theme sang Material theme
-          theme: lightTheme.toApproximateMaterialTheme(),
-          // Theme cho dark mode - chuyển đổi từ forui theme sang Material theme
-          darkTheme: darkTheme.toApproximateMaterialTheme(),
+          // Theme cho light mode - chuyển đổi từ forui theme sang Material theme với Inter font
+          theme: lightMaterialTheme,
+          // Theme cho dark mode - chuyển đổi từ forui theme sang Material theme với Inter font
+          darkTheme: darkMaterialTheme,
           // Xác định theme mode dựa trên brightness của theme hiện tại
           themeMode: theme.colors.brightness == Brightness.dark
               ? ThemeMode.dark

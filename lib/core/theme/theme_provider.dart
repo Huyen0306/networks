@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ThemeProvider extends ChangeNotifier {
   // Key để lưu trạng thái dark mode trong SharedPreferences
@@ -15,6 +16,13 @@ class ThemeProvider extends ChangeNotifier {
   FThemeData get currentTheme {
     return isDarkMode ? FThemes.blue.dark : FThemes.blue.light;
   }
+
+  // Getter để lấy Inter font (dùng cho text thông thường)
+  TextStyle get interFont => GoogleFonts.inter();
+
+  // Getter để lấy BBH Bartle font (dùng cho heading hoặc special text)
+  // Note: BBH Bartle có thể là Bebas Neue hoặc font khác, điều chỉnh theo yêu cầu
+  TextStyle get bbhBartleFont => GoogleFonts.bebasNeue();
 
   // Constructor - khởi tạo và tải trạng thái dark mode từ SharedPreferences
   ThemeProvider() {

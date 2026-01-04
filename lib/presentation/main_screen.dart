@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/theme/theme_provider.dart';
+import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/home/screens/home_screen.dart';
 import 'package:network/presentation/friends/screens/friends_screen.dart';
 import 'package:network/presentation/profile/screens/profile_screen.dart';
@@ -49,15 +50,15 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           FBottomNavigationBarItem(
             icon: const Icon(FIcons.house),
-            label: const Text('Home'),
+            label: Text('Home', style: AppFonts.bbhBartle(fontSize: 12)),
           ),
           FBottomNavigationBarItem(
             icon: const Icon(FIcons.users),
-            label: const Text('Friends'),
+            label: Text('Friends', style: AppFonts.bbhBartle(fontSize: 12)),
           ),
           FBottomNavigationBarItem(
             icon: const Icon(FIcons.user),
-            label: const Text('Profile'),
+            label: Text('Profile', style: AppFonts.bbhBartle(fontSize: 12)),
           ),
         ],
       ),

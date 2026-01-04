@@ -37,6 +37,7 @@ dependencies:
   forui: ^0.14.1
   forui_assets: ^0.14.0
   shared_preferences: ^2.5.3
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
