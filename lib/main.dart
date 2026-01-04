@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:network/core/auth/auth_provider.dart';
 import 'package:network/core/theme/theme_provider.dart';
+import 'package:network/presentation/login/screens/login_screen.dart';
 import 'package:network/presentation/main_screen.dart';
 
 // Hàm main - điểm khởi đầu của ứng dụng
@@ -21,11 +23,14 @@ class Application extends StatefulWidget {
 class _ApplicationState extends State<Application> {
   // Tạo instance của ThemeProvider để quản lý theme
   final _themeProvider = ThemeProvider();
+  // Tạo instance của AuthProvider để quản lý authentication
+  final _authProvider = AuthProvider();
 
   // Hàm dispose - giải phóng tài nguyên khi widget bị hủy
   @override
   void dispose() {
     _themeProvider.dispose();
+    _authProvider.dispose();
     super.dispose();
   }
 
@@ -34,7 +39,7 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     // Sử dụng AnimatedBuilder để tự động rebuild khi theme thay đổi
     return AnimatedBuilder(
-      animation: _themeProvider,
+      animation: Listenable.merge([_themeProvider, _authProvider]),
       builder: (context, child) {
         // Lấy theme hiện tại từ ThemeProvider
         final theme = _themeProvider.currentTheme;
@@ -77,8 +82,13 @@ class _ApplicationState extends State<Application> {
           themeMode: theme.colors.brightness == Brightness.dark
               ? ThemeMode.dark
               : ThemeMode.light,
-          // Màn hình chính của ứng dụng
-          home: MainScreen(themeProvider: _themeProvider),
+          // Kiểm tra trạng thái đăng nhập để hiển thị màn hình phù hợp
+          home: _authProvider.isLoggedIn
+              ? MainScreen(
+                  themeProvider: _themeProvider,
+                  authProvider: _authProvider,
+                )
+              : LoginScreen(authProvider: _authProvider),
         );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:network/core/auth/auth_provider.dart';
 import 'package:network/core/theme/theme_provider.dart';
 import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/profile/widgets/auto_dark_mode_card.dart';
@@ -7,8 +8,13 @@ import 'package:network/presentation/profile/widgets/profile_info_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   final ThemeProvider themeProvider;
+  final AuthProvider authProvider;
 
-  const ProfileScreen({super.key, required this.themeProvider});
+  const ProfileScreen({
+    super.key,
+    required this.themeProvider,
+    required this.authProvider,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -44,7 +50,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const ProfileInfoCard(),
             AutoDarkModeCard(themeProvider: widget.themeProvider),
             FButton(
-              onPress: () {},
+              onPress: () async {
+                await widget.authProvider.logout();
+              },
               style: FButtonStyle.primary(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
