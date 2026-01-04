@@ -10,10 +10,6 @@ class AutoDarkModeCard extends StatelessWidget {
 
   const AutoDarkModeCard({super.key, required this.themeProvider});
 
-  static const double _spacingBetween = 16.0;
-  static const double _verticalSpacing = 6.0;
-  static const double _titleFontSize = 16.0;
-
   @override
   Widget build(BuildContext context) {
     // ... (build method)
@@ -101,15 +97,15 @@ class AutoDarkModeCard extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 6,
             children: [
               Text(
                 'CHUYỂN ĐỔI MÀU NỀN',
                 style: AppFonts.inter(
-                  fontSize: _titleFontSize,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: _verticalSpacing),
               Text(
                 'Theo dõi màu nền của hệ thống',
                 style: AppFonts.inter(
@@ -119,7 +115,6 @@ class AutoDarkModeCard extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: _spacingBetween),
         FSwitch(
           value: themeProvider.isDarkMode,
           onChange: (_) => themeProvider.toggleDarkMode(),
