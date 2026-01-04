@@ -3,6 +3,7 @@ import 'package:forui/forui.dart';
 import 'package:network/core/theme/theme_provider.dart';
 import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/profile/widgets/auto_dark_mode_card.dart';
+import 'package:network/presentation/profile/widgets/profile_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   final ThemeProvider themeProvider;
@@ -33,7 +34,11 @@ class ProfileScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Column(
-          children: [AutoDarkModeCard(themeProvider: themeProvider)],
+          spacing: 16,
+          children: [
+            const ProfileInfoCard(),
+            AutoDarkModeCard(themeProvider: themeProvider),
+          ],
         ),
       ),
     );
