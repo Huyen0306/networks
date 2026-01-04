@@ -44,6 +44,38 @@ class AutoDarkModeCard extends StatelessWidget {
     );
   }
 
+  Widget _buildContent(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 6,
+            children: [
+              Text(
+                'CHUYỂN ĐỔI MÀU NỀN',
+                style: AppFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                'Theo dõi màu nền của hệ thống',
+                style: AppFonts.inter(
+                  color: context.theme.colors.mutedForeground,
+                ),
+              ),
+            ],
+          ),
+        ),
+        FSwitch(
+          value: themeProvider.isDarkMode,
+          onChange: (_) => themeProvider.toggleDarkMode(),
+        ),
+      ],
+    );
+  }
+
   Widget _buildThemePicker(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -89,37 +121,5 @@ class AutoDarkModeCard extends StatelessWidget {
       case AppColorTheme.violet:
         return FThemes.violet.light.colors.primary;
     }
-  }
-
-  Widget _buildContent(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 6,
-            children: [
-              Text(
-                'CHUYỂN ĐỔI MÀU NỀN',
-                style: AppFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Theo dõi màu nền của hệ thống',
-                style: AppFonts.inter(
-                  color: context.theme.colors.mutedForeground,
-                ),
-              ),
-            ],
-          ),
-        ),
-        FSwitch(
-          value: themeProvider.isDarkMode,
-          onChange: (_) => themeProvider.toggleDarkMode(),
-        ),
-      ],
-    );
   }
 }
