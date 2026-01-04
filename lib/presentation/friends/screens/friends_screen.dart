@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/auth/auth_provider.dart';
+import 'package:network/core/models/user_model.dart';
 import 'package:network/core/theme/app_fonts.dart';
+import 'package:network/presentation/friends/screens/friend_detail_screen.dart';
 import 'package:network/presentation/friends/services/friends_service.dart';
 import 'package:network/presentation/friends/widgets/friend_card.dart';
 import 'package:network/presentation/shared/widgets/user_avatar.dart';
@@ -73,13 +75,18 @@ class FriendsScreen extends StatelessWidget {
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 12),
                 itemBuilder: (context, index) {
-                  final user = users[index];
+                  final userData = users[index];
+                  final user = UserModel.fromJson(userData);
                   return FriendCard(
-                    firstName: user['firstName'] ?? '',
-                    lastName: user['lastName'] ?? '',
-                    imageUrl: user['image'],
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    imageUrl: user.image,
                     onViewDetail: () {
-                      // Xử lý xem chi tiết
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => FriendDetailScreen(user: user),
+                        ),
+                      );
                     },
                   );
                 },
