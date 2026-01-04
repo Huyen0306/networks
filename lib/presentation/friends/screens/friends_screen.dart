@@ -7,21 +7,18 @@ class FriendsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Friends'),
-        titleTextStyle: AppFonts.bbhBartle(
-          fontSize: 24,
-          color: context.theme.colors.foreground,
-        ),
-        backgroundColor: context.theme.colors.background,
-        elevation: 0,
-      ),
-      body: FScaffold(
-        child: Center(
-          child: Text('Friends'),
+    return FScaffold(
+      scaffoldStyle: (style) => style.copyWith(
+        headerDecoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: context.theme.colors.border, width: 0.5),
+          ),
         ),
       ),
+      header: FHeader(
+        title: Text('Friends', style: AppFonts.bbhBartle(fontSize: 40)),
+      ),
+      child: Center(child: Text('Friends')),
     );
   }
 }
