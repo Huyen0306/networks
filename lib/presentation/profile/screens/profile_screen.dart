@@ -20,6 +20,14 @@ class ProfileScreen extends StatelessWidget {
       ),
       header: FHeader(
         title: Text('Profile', style: AppFonts.bbhBartle(fontSize: 40)),
+        suffixes: [
+          FAvatar(
+            image: const NetworkImage('https://example.com/profile.jpg'),
+            size: 40.0,
+            semanticsLabel: 'User avatar',
+            fallback: Text('JD', style: AppFonts.bbhBartle(fontSize: 16)),
+          ),
+        ],
       ),
       child: Center(child: Text('Profile')),
     );
