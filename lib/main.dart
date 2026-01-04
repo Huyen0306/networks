@@ -28,6 +28,8 @@ class _ApplicationState extends State<Application> {
       animation: _themeProvider,
       builder: (context, child) {
         final theme = _themeProvider.currentTheme;
+        final lightTheme = FThemes.blue.light;
+        final darkTheme = FThemes.blue.dark;
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -36,8 +38,8 @@ class _ApplicationState extends State<Application> {
             ...FLocalizations.localizationsDelegates,
           ],
           builder: (_, child) => FTheme(data: theme, child: child!),
-          theme: theme.toApproximateMaterialTheme(),
-          darkTheme: theme.toApproximateMaterialTheme(),
+          theme: lightTheme.toApproximateMaterialTheme(),
+          darkTheme: darkTheme.toApproximateMaterialTheme(),
           themeMode: theme.colors.brightness == Brightness.dark
               ? ThemeMode.dark
               : ThemeMode.light,
@@ -54,18 +56,21 @@ class Example extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 10,
-      children: [
-        FButton(
-          onPress: () {
-            themeProvider.toggleDarkMode();
-          },
-          suffix: Icon(themeProvider.isDarkMode ? FIcons.moon : FIcons.sun),
-          child: Text(themeProvider.isDarkMode ? 'Dark Mode' : 'Light Mode'),
-        ),
-      ],
+    child: FScaffold(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 10,
+        children: [
+          FButton(
+            onPress: () {
+              themeProvider.toggleDarkMode();
+            },
+            suffix: Icon(themeProvider.isDarkMode ? FIcons.moon : FIcons.sun),
+            child: Text(themeProvider.isDarkMode ? 'Dark Mode' : 'Light Mode'),
+          ),
+        ],
+      ),
     ),
   );
 }

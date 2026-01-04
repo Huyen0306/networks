@@ -13,7 +13,7 @@ class ThemeProvider extends ChangeNotifier {
 
   // Getter để lấy theme đang chọn
   FThemeData get currentTheme {
-    return _isDarkMode ? FThemes.blue.dark : FThemes.blue.light;
+    return isDarkMode ? FThemes.blue.dark : FThemes.blue.light;
   }
 
   // Constructor
