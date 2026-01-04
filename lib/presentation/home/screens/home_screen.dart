@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/auth/auth_provider.dart';
+import 'package:network/core/models/post_model.dart';
 import 'package:network/core/theme/app_fonts.dart';
+import 'package:network/presentation/home/screens/post_detail_screen.dart';
 import 'package:network/presentation/home/services/home_service.dart';
 import 'package:network/presentation/home/widgets/post_card.dart';
 import 'package:network/presentation/shared/widgets/user_avatar.dart';
@@ -73,18 +75,23 @@ class HomeScreen extends StatelessWidget {
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 12),
                 itemBuilder: (context, index) {
-                  final post = posts[index];
+                  final postData = posts[index];
+                  final post = PostModel.fromJson(postData);
                   return PostCard(
-                    id: post['id'] ?? 0,
-                    title: post['title'] ?? '',
-                    body: post['body'] ?? '',
-                    tags: (post['tags'] as List?)?.cast<String>() ?? [],
-                    likes: post['reactions']?['likes'] ?? 0,
-                    dislikes: post['reactions']?['dislikes'] ?? 0,
-                    views: post['views'] ?? 0,
-                    userId: post['userId'] ?? 0,
+                    id: post.id,
+                    title: post.title,
+                    body: post.body,
+                    tags: post.tags,
+                    likes: post.likes,
+                    dislikes: post.dislikes,
+                    views: post.views,
+                    userId: post.userId,
                     onViewDetail: () {
-                      // Xử lý xem chi tiết
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PostDetailScreen(post: post),
+                        ),
+                      );
                     },
                   );
                 },
