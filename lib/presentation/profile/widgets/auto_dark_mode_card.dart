@@ -46,30 +46,45 @@ class AutoDarkModeCard extends StatelessWidget {
   }
 
   Widget _buildThemePicker(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _ThemeOption(
-          color: const Color(0xFF0084FF), // Màu xanh như trong ảnh
-          isSelected: !themeProvider.isDarkMode,
-          onTap: () {
-            if (themeProvider.isDarkMode) {
-              themeProvider.toggleDarkMode();
-            }
-          },
-        ),
-        const SizedBox(width: 12),
-        _ThemeOption(
-          color: Colors.black, // Màu đen như trong ảnh
-          isSelected: themeProvider.isDarkMode,
-          onTap: () {
-            if (!themeProvider.isDarkMode) {
-              themeProvider.toggleDarkMode();
-            }
-          },
-        ),
-      ],
+    return GridView.count(
+      crossAxisCount: 5,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 12,
+      crossAxisSpacing: 12,
+      childAspectRatio: 1,
+      children: AppColorTheme.values.map((theme) {
+        return _ThemeOption(
+          color: _getThemeColor(theme),
+          isSelected: themeProvider.colorTheme == theme,
+          onTap: () => themeProvider.setColorTheme(theme),
+        );
+      }).toList(),
     );
+  }
+
+  Color _getThemeColor(AppColorTheme theme) {
+    // ... (giữ nguyên logic màu sắc)
+    switch (theme) {
+      case AppColorTheme.zinc:
+        return FThemes.zinc.light.colors.primary;
+      case AppColorTheme.slate:
+        return FThemes.slate.light.colors.primary;
+      case AppColorTheme.red:
+        return FThemes.red.light.colors.primary;
+      case AppColorTheme.rose:
+        return FThemes.rose.light.colors.primary;
+      case AppColorTheme.orange:
+        return FThemes.orange.light.colors.primary;
+      case AppColorTheme.green:
+        return FThemes.green.light.colors.primary;
+      case AppColorTheme.blue:
+        return FThemes.blue.light.colors.primary;
+      case AppColorTheme.yellow:
+        return FThemes.yellow.light.colors.primary;
+      case AppColorTheme.violet:
+        return FThemes.violet.light.colors.primary;
+    }
   }
 
   Widget _buildContent(BuildContext context) {
@@ -121,39 +136,40 @@ class _ThemeOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: 64,
-        height: 64,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: isSelected
-            ? Stack(
-                children: [
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withAlpha(51), // ~0.2 opacity
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: isSelected
+              ? Stack(
+                  children: [
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withAlpha(51), // ~0.2 opacity
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 16,
                         ),
                       ),
-                      child: const Icon(
-                        Icons.check,
-                        color: Colors.white,
-                        size: 16,
-                      ),
                     ),
-                  ),
-                ],
-              )
-            : null,
+                  ],
+                )
+              : null,
+        ),
       ),
     );
   }
