@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Cho phép HTTP cho tất cả domains -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    
+    <!-- Hoặc chỉ cho phép HTTP cho domain cụ thể (dummyjson.com) -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">dummyjson.com</domain>
+    </domain-config>
+</network-security-config>
+
