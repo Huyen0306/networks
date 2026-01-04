@@ -84,39 +84,3 @@ class _ApplicationState extends State<Application> {
     );
   }
 }
-
-// Widget Example - màn hình ví dụ với nút chuyển đổi dark mode
-// class Example extends StatelessWidget {
-//   // ThemeProvider để quản lý và toggle dark mode
-//   final ThemeProvider themeProvider;
-//   const Example({super.key, required this.themeProvider});
-//
-//   // Hàm build - xây dựng giao diện của màn hình
-//   @override
-//   Widget build(BuildContext context) => Center(
-//     // Sử dụng FScaffold để có background color tự động thay đổi theo theme
-//     child: FScaffold(
-//       child: Column(
-//         // Căn giữa theo trục chính
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         // Căn giữa theo trục phụ
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         // Khoảng cách giữa các children
-//         spacing: 10,
-//         children: [
-//           // Nút để chuyển đổi giữa dark mode và light mode
-//           FButton(
-//             // Hàm xử lý khi nhấn nút - toggle dark mode
-//             onPress: () {
-//               themeProvider.toggleDarkMode();
-//             },
-//             // Icon hiển thị ở cuối nút (moon cho dark mode, sun cho light mode)
-//             suffix: Icon(themeProvider.isDarkMode ? FIcons.moon : FIcons.sun),
-//             // Text hiển thị trên nút
-//             child: Text(themeProvider.isDarkMode ? 'Dark Mode' : 'Light Mode'),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
