@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Đăng nhập thành công
       final userData = response.data;
-      await widget.authProvider.login(userData['email'] ?? username);
+      await widget.authProvider.login(userData);
 
       if (mounted) {
         setState(() {

@@ -29,8 +29,8 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _pages = [
-      const HomeScreen(),
-      const FriendsScreen(),
+      HomeScreen(authProvider: widget.authProvider),
+      FriendsScreen(authProvider: widget.authProvider),
       ProfileScreen(
         themeProvider: widget.themeProvider,
         authProvider: widget.authProvider,

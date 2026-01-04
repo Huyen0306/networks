@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:network/core/auth/auth_provider.dart';
 import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/home/services/home_service.dart';
 import 'package:network/presentation/home/widgets/post_card.dart';
+import 'package:network/presentation/shared/widgets/user_avatar.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final AuthProvider authProvider;
+
+  const HomeScreen({
+    super.key,
+    required this.authProvider,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +29,9 @@ class HomeScreen extends StatelessWidget {
       header: FHeader(
         title: Text('Home', style: AppFonts.bbhBartle(fontSize: 40)),
         suffixes: [
-          FAvatar(
-            image: const AssetImage('assets/images/user.png'),
+          UserAvatar(
+            authProvider: authProvider,
             size: 40.0,
-            semanticsLabel: 'User avatar',
-            fallback: Text('JD', style: AppFonts.bbhBartle(fontSize: 16)),
           ),
         ],
       ),

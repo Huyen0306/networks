@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:network/core/models/user_model.dart';
 import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/profile/widgets/profile_info_list.dart';
 
 class ProfileInfoCard extends StatelessWidget {
-  const ProfileInfoCard({super.key});
+  final UserModel? user;
+
+  const ProfileInfoCard({
+    super.key,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +31,13 @@ class ProfileInfoCard extends StatelessWidget {
                 Column(
                   children: [
                     FAvatar(
-                      image: const AssetImage('assets/images/user.png'),
+                      image: user?.image != null
+                          ? NetworkImage(user!.image!)
+                          : const AssetImage('assets/images/user.png'),
                       size: 80.0,
                       semanticsLabel: 'User avatar',
                       fallback: Text(
-                        'JD',
+                        user?.initials ?? 'JD',
                         style: AppFonts.bbhBartle(fontSize: 32),
                       ),
                     ),
@@ -55,7 +63,7 @@ class ProfileInfoCard extends StatelessWidget {
               ],
             ),
           ),
-          const ProfileInfoList(),
+          ProfileInfoList(user: user),
         ],
       ),
     );

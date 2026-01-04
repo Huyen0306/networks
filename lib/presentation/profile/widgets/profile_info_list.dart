@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:network/core/theme/app_fonts.dart';
+import 'package:network/core/models/user_model.dart';
 
 class ProfileInfoList extends StatelessWidget {
-  const ProfileInfoList({super.key});
+  final UserModel? user;
+
+  const ProfileInfoList({
+    super.key,
+    required this.user,
+  });
+
+  String _getGenderText(String? gender) {
+    if (gender == null || gender.isEmpty) return 'Chưa cập nhật';
+    switch (gender.toLowerCase()) {
+      case 'male':
+      case 'nam':
+        return 'Nam';
+      case 'female':
+      case 'nữ':
+        return 'Nữ';
+      default:
+        return gender;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +37,8 @@ class ProfileInfoList extends StatelessWidget {
       ),
       children: [
         FTile(
-          title: Text('Họ và tên'),
-          subtitle: const Text('Vvvv'),
+          title: const Text('Họ và tên'),
+          subtitle: Text(user?.fullName ?? 'Chưa cập nhật'),
           suffix: const Icon(FIcons.chevronRight),
           onPress: () {
             // Handle edit name
@@ -27,7 +46,7 @@ class ProfileInfoList extends StatelessWidget {
         ),
         FTile(
           title: const Text('Email'),
-          subtitle: const Text('vvvvvvv25423@gmail.com'),
+          subtitle: Text(user?.email ?? 'Chưa cập nhật'),
           suffix: const Icon(FIcons.chevronRight),
           onPress: () {
             // Handle edit email
@@ -35,7 +54,7 @@ class ProfileInfoList extends StatelessWidget {
         ),
         FTile(
           title: const Text('Giới tính'),
-          subtitle: const Text('Nữ'),
+          subtitle: Text(_getGenderText(user?.gender)),
           suffix: const Icon(FIcons.chevronRight),
           onPress: () {
             // Handle edit gender
@@ -43,7 +62,7 @@ class ProfileInfoList extends StatelessWidget {
         ),
         FTile(
           title: const Text('Tên đăng nhập'),
-          subtitle: const Text('vvvvvvvvv578'),
+          subtitle: Text(user?.username ?? 'Chưa cập nhật'),
           suffix: const Icon(FIcons.chevronRight),
           onPress: () {
             // Handle edit username

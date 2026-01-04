@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:network/core/auth/auth_provider.dart';
 import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/friends/services/friends_service.dart';
 import 'package:network/presentation/friends/widgets/friend_card.dart';
+import 'package:network/presentation/shared/widgets/user_avatar.dart';
 
 class FriendsScreen extends StatelessWidget {
-  const FriendsScreen({super.key});
+  final AuthProvider authProvider;
+
+  const FriendsScreen({
+    super.key,
+    required this.authProvider,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +29,9 @@ class FriendsScreen extends StatelessWidget {
       header: FHeader(
         title: Text('Friends', style: AppFonts.bbhBartle(fontSize: 40)),
         suffixes: [
-          FAvatar(
-            image: const AssetImage('assets/images/user.png'),
+          UserAvatar(
+            authProvider: authProvider,
             size: 40.0,
-            semanticsLabel: 'User avatar',
-            fallback: Text('JD', style: AppFonts.bbhBartle(fontSize: 16)),
           ),
         ],
       ),
