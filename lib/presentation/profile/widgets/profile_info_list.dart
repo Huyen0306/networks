@@ -18,7 +18,7 @@ class ProfileInfoList extends StatelessWidget {
       ),
       children: [
         FTile(
-          title: Text('Họ và tên', style: AppFonts.inter()),
+          title: Text('Họ và tên'),
           subtitle: const Text('Vvvv'),
           suffix: const Icon(FIcons.chevronRight),
           onPress: () {
