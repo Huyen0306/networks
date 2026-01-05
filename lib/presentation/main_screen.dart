@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/auth/auth_provider.dart';
@@ -42,34 +43,23 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _pages),
-      bottomNavigationBar: FBottomNavigationBar(
+      bottomNavigationBar: CurvedNavigationBar(
         index: _currentIndex,
-        onChange: (index) {
+        onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        style: (style) => style.copyWith(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(color: context.theme.colors.border, width: 0.5),
-            ),
-          ),
-        ),
-        children: [
-          FBottomNavigationBarItem(
-            icon: const Icon(FIcons.house),
-            label: Text('Home', style: AppFonts.bbhBartle(fontSize: 12)),
-          ),
-          FBottomNavigationBarItem(
-            icon: const Icon(FIcons.users),
-            label: Text('Friends', style: AppFonts.bbhBartle(fontSize: 12)),
-          ),
-          FBottomNavigationBarItem(
-            icon: const Icon(FIcons.user),
-            label: Text('Profile', style: AppFonts.bbhBartle(fontSize: 12)),
-          ),
+        items: [
+          Icon(FIcons.house, color: context.theme.colors.primaryForeground),
+          Icon(FIcons.users, color: context.theme.colors.primaryForeground),
+          Icon(FIcons.user, color: context.theme.colors.primaryForeground),
         ],
+        color: context.theme.colors.primary,
+        buttonBackgroundColor: context.theme.colors.primary,
+        backgroundColor: context.theme.colors.background,
+        animationCurve: Curves.easeInOut,
+        animationDuration: const Duration(milliseconds: 350),
       ),
     );
   }
