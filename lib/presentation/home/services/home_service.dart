@@ -15,5 +15,12 @@ class HomeService {
   Future<Response> getPost(int id) async {
     return await _dioClient.dio.get('/posts/$id');
   }
-}
 
+  // Tìm kiếm bài viết
+  Future<Response> searchPosts(String query) async {
+    return await _dioClient.dio.get(
+      '/posts/search',
+      queryParameters: {'q': query},
+    );
+  }
+}

@@ -15,4 +15,12 @@ class FriendsService {
   Future<Response> getUser(int id) async {
     return await _dioClient.dio.get('/users/$id');
   }
+
+  // Tìm kiếm user
+  Future<Response> searchUsers(String query) async {
+    return await _dioClient.dio.get(
+      '/users/search',
+      queryParameters: {'q': query},
+    );
+  }
 }
