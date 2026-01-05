@@ -36,6 +36,22 @@ class PostCardDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Image
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              'https://picsum.photos/seed/post$id/800/600',
+              height: 250,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                height: 250,
+                color: context.theme.colors.muted,
+                child: const Icon(FIcons.image),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           // Title
           Text(
             title,
@@ -65,7 +81,10 @@ class PostCardDetails extends StatelessWidget {
               runSpacing: 8,
               children: tags.take(3).map((tag) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: context.theme.colors.muted,
                     borderRadius: BorderRadius.circular(8),
@@ -132,4 +151,3 @@ class PostCardDetails extends StatelessWidget {
     );
   }
 }
-

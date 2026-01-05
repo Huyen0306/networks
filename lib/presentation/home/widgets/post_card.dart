@@ -38,6 +38,22 @@ class PostCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Image
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              'https://picsum.photos/seed/post$id/800/600',
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                height: 200,
+                color: context.theme.colors.muted,
+                child: const Icon(FIcons.image),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           // Title
           Text(
             title,
