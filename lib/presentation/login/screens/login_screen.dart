@@ -20,6 +20,40 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   String? _errorMessage;
 
+  void _showLoginSuccessToast() {
+    final cardStyle = context.theme.cardStyle.copyWith(
+      contentStyle: context.theme.cardStyle.contentStyle.copyWith(
+        titleTextStyle: context.theme.typography.sm.copyWith(
+          color: context.theme.colors.primary,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+
+    showRawFToast(
+      context: context,
+      alignment: FToastAlignment.topCenter,
+      duration: const Duration(seconds: 3),
+      builder: (context, toast) => Align(
+        alignment: Alignment.topCenter,
+        child: IntrinsicHeight(
+          child: FCard(
+            style: cardStyle,
+            title: const Text('Login thành công'),
+            subtitle: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text('Chào mừng bạn quay lại.'),
+            ),
+            child: FButton(
+              child: const Text('Đóng'),
+              onPress: () => toast.dismiss(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _usernameController.dispose();
@@ -58,6 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _isLoading = false;
         });
+        debugPrint('Đăng nhập thành công');
+        _showLoginSuccessToast();
       }
     } catch (e) {
       if (mounted) {

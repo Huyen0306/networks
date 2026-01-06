@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/auth/auth_provider.dart';
@@ -25,10 +26,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   late final List<Widget> _pages;
+  late final ConfettiController _confettiController;
 
   @override
   void initState() {
     super.initState();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 2),
+    );
     _pages = [
       HomeScreen(authProvider: widget.authProvider),
       FriendsScreen(authProvider: widget.authProvider),
@@ -37,12 +42,46 @@ class _MainScreenState extends State<MainScreen> {
         authProvider: widget.authProvider,
       ),
     ];
+
+    if (widget.authProvider.consumeLoginConfetti()) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _confettiController.play();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: _pages),
+      body: Stack(
+        children: [
+          IndexedStack(index: _currentIndex, children: _pages),
+          Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _confettiController,
+              blastDirectionality: BlastDirectionality.explosive,
+              shouldLoop: false,
+              emissionFrequency: 0.05,
+              numberOfParticles: 30,
+              gravity: 0.2,
+              colors: const [
+                Color(0xFF4FC3F7),
+                Color(0xFF81C784),
+                Color(0xFFFFF176),
+                Color(0xFFFF8A65),
+                Color(0xFFBA68C8),
+              ],
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: CurvedNavigationBar(
         index: _currentIndex,
         onTap: (index) {

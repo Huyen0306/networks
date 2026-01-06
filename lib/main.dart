@@ -72,8 +72,11 @@ class _ApplicationState extends State<Application> {
           localizationsDelegates: const [
             ...FLocalizations.localizationsDelegates,
           ],
-          // Builder để wrap toàn bộ app với FTheme để sử dụng forui theme
-          builder: (_, child) => FTheme(data: theme, child: child!),
+          // Builder để wrap toàn bộ app với FTheme và FToaster để dùng toast
+          builder: (_, child) => FTheme(
+            data: theme,
+            child: FToaster(child: child!),
+          ),
           // Theme cho light mode - chuyển đổi từ forui theme sang Material theme với Inter font
           theme: lightMaterialTheme,
           // Theme cho dark mode - chuyển đổi từ forui theme sang Material theme với Inter font

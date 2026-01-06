@@ -9,6 +9,7 @@ class AuthProvider extends ChangeNotifier {
 
   bool _isLoggedIn = false;
   UserModel? _user;
+  bool _showLoginConfetti = false;
 
   bool get isLoggedIn => _isLoggedIn;
   UserModel? get user => _user;
@@ -43,7 +44,16 @@ class AuthProvider extends ChangeNotifier {
 
     _isLoggedIn = true;
     _user = user;
+    _showLoginConfetti = true;
     notifyListeners();
+  }
+
+  bool consumeLoginConfetti() {
+    if (_showLoginConfetti) {
+      _showLoginConfetti = false;
+      return true;
+    }
+    return false;
   }
 
   Future<void> logout() async {
