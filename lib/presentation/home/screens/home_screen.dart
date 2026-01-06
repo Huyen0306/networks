@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/auth/auth_provider.dart';
@@ -29,11 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
   final _bodyController = TextEditingController();
   String _searchQuery = '';
   bool _isCreatingPost = false;
+  late final ConfettiController _confettiController;
 
   @override
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 2),
+    );
   }
 
   @override
@@ -42,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _searchController.dispose();
     _titleController.dispose();
     _bodyController.dispose();
+    _confettiController.dispose();
     super.dispose();
   }
 
@@ -83,6 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
       await widget.postProvider.addPost(newPost);
 
+      // Play confetti
+      _confettiController.play();
+
       // Clear form và ẩn
       _titleController.clear();
       _bodyController.clear();
@@ -101,23 +110,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showSuccessToast() {
+    final contentStyle = context.theme.cardStyle.contentStyle.copyWith(
+      titleTextStyle: context.theme.typography.sm.copyWith(
+        color: context.theme.colors.primary,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+    final cardStyle = context.theme.cardStyle.copyWith(
+      contentStyle: contentStyle,
+    );
+
     showRawFToast(
       context: context,
       alignment: FToastAlignment.topCenter,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       builder: (context, toast) => Align(
         alignment: Alignment.topCenter,
         child: IntrinsicHeight(
           child: FCard(
-            title: Text(
-              'Đăng bài thành công!',
-              style: AppFonts.inter(
-                fontWeight: FontWeight.w600,
-                color: context.theme.colors.primary,
-              ),
+            style: cardStyle,
+            title: const Text('Đăng bài thành công'),
+            subtitle: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text('Bài viết của bạn đã được hiển thị trên bảng tin.'),
             ),
             child: FButton(
-              style: FButtonStyle.secondary(),
+              style: FButtonStyle.primary(),
               child: const Text('Đóng'),
               onPress: () => toast.dismiss(),
             ),
@@ -165,7 +183,29 @@ class _HomeScreenState extends State<HomeScreen> {
       child: AnimatedBuilder(
         animation: widget.postProvider,
         builder: (context, child) {
-          return _buildPostsList(context);
+          return Stack(
+            children: [
+              _buildPostsList(context),
+              Align(
+                alignment: Alignment.topCenter,
+                child: ConfettiWidget(
+                  confettiController: _confettiController,
+                  blastDirectionality: BlastDirectionality.explosive,
+                  shouldLoop: false,
+                  emissionFrequency: 0.05,
+                  numberOfParticles: 30,
+                  gravity: 0.2,
+                  colors: const [
+                    Color(0xFF4FC3F7),
+                    Color(0xFF81C784),
+                    Color(0xFFFFF176),
+                    Color(0xFFFF8A65),
+                    Color(0xFFBA68C8),
+                  ],
+                ),
+              ),
+            ],
+          );
         },
       ),
     );
@@ -295,37 +335,60 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
 
-        // Gộp posts của user với posts từ API
-        final allPosts = widget.postProvider.mergeWithApiPosts(apiPosts);
+        // Lọc user posts nếu có search query
+        final List<PostModel> filteredUserPosts = _searchQuery.isEmpty
+            ? widget.postProvider.userPosts
+            : widget.postProvider.userPosts.where((post) {
+                final query = _searchQuery.toLowerCase();
+                return post.title.toLowerCase().contains(query) ||
+                    post.body.toLowerCase().contains(query);
+              }).toList();
+
+        // Gộp posts của user đã lọc với posts từ API
+        final allPosts = [...filteredUserPosts, ...apiPosts];
 
         return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-          itemCount: allPosts.length + 1, // +1 cho form tạo post
+          itemCount: _searchQuery.isEmpty
+              ? allPosts.length + 1
+              : allPosts.length,
           separatorBuilder: (context, index) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
-            if (index == 0) {
-              return _buildCreatePostSection(context);
+            if (_searchQuery.isEmpty) {
+              if (index == 0) {
+                return _buildCreatePostSection(context);
+              }
+              final post = allPosts[index - 1];
+              return _buildPostCard(post);
+            } else {
+              final post = allPosts[index];
+              return _buildPostCard(post);
             }
-
-            final post = allPosts[index - 1];
-            return PostCard(
-              id: post.id,
-              title: post.title,
-              body: post.body,
-              tags: post.tags,
-              likes: post.likes,
-              dislikes: post.dislikes,
-              views: post.views,
-              userId: post.userId,
-              onViewDetail: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => PostDetailScreen(post: post),
-                  ),
-                );
-              },
-            );
           },
+        );
+      },
+    );
+  }
+
+  Widget _buildPostCard(PostModel post) {
+    return PostCard(
+      id: post.id,
+      title: post.title,
+      body: post.body,
+      tags: post.tags,
+      likes: post.likes,
+      dislikes: post.dislikes,
+      views: post.views,
+      userId: post.userId,
+      onViewDetail: () {
+        final isUserPost = widget.postProvider.userPosts.any(
+          (p) => p.id == post.id,
+        );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) =>
+                PostDetailScreen(post: post, isUserPost: isUserPost),
+          ),
         );
       },
     );

@@ -7,11 +7,26 @@ import 'package:network/presentation/home/widgets/comment_card.dart';
 
 class CommentsList extends StatelessWidget {
   final int postId;
+  final bool isUserPost;
 
-  const CommentsList({super.key, required this.postId});
+  const CommentsList({
+    super.key,
+    required this.postId,
+    this.isUserPost = false,
+  });
 
   @override
   Widget build(BuildContext context) {
+    if (isUserPost) {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Text(
+          'Chưa có bình luận nào',
+          style: AppFonts.inter(color: context.theme.colors.mutedForeground),
+        ),
+      );
+    }
+
     final commentService = CommentService();
 
     return FutureBuilder(

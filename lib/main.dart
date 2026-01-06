@@ -83,7 +83,13 @@ class _ApplicationState extends State<Application> {
           // Builder để wrap toàn bộ app với FTheme và FToaster để dùng toast
           builder: (_, child) => FTheme(
             data: theme,
-            child: FToaster(child: child!),
+            child: FToaster(
+              child: GestureDetector(
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                behavior: HitTestBehavior.opaque,
+                child: child!,
+              ),
+            ),
           ),
           // Theme cho light mode - chuyển đổi từ forui theme sang Material theme với Inter font
           theme: lightMaterialTheme,

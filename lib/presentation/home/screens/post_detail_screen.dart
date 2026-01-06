@@ -7,8 +7,13 @@ import 'package:network/presentation/home/widgets/post_card_details.dart';
 
 class PostDetailScreen extends StatelessWidget {
   final PostModel post;
+  final bool isUserPost;
 
-  const PostDetailScreen({super.key, required this.post});
+  const PostDetailScreen({
+    super.key,
+    required this.post,
+    this.isUserPost = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class PostDetailScreen extends StatelessWidget {
               userId: post.userId,
             ),
             const SizedBox(height: 12),
-            CommentsList(postId: post.id),
+            CommentsList(postId: post.id, isUserPost: isUserPost),
             const SizedBox(height: 12),
             FButton(
               onPress: () => Navigator.of(context).pop(),
