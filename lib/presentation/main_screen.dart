@@ -2,6 +2,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:network/core/auth/auth_provider.dart';
+import 'package:network/core/posts/post_provider.dart';
 import 'package:network/core/theme/theme_provider.dart';
 import 'package:network/core/theme/app_fonts.dart';
 import 'package:network/presentation/home/screens/home_screen.dart';
@@ -11,11 +12,13 @@ import 'package:network/presentation/profile/screens/profile_screen.dart';
 class MainScreen extends StatefulWidget {
   final ThemeProvider themeProvider;
   final AuthProvider authProvider;
+  final PostProvider postProvider;
 
   const MainScreen({
     super.key,
     required this.themeProvider,
     required this.authProvider,
+    required this.postProvider,
   });
 
   @override
@@ -34,7 +37,10 @@ class _MainScreenState extends State<MainScreen> {
       duration: const Duration(seconds: 2),
     );
     _pages = [
-      HomeScreen(authProvider: widget.authProvider),
+      HomeScreen(
+        authProvider: widget.authProvider,
+        postProvider: widget.postProvider,
+      ),
       FriendsScreen(authProvider: widget.authProvider),
       ProfileScreen(
         themeProvider: widget.themeProvider,

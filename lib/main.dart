@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:network/core/auth/auth_provider.dart';
+import 'package:network/core/posts/post_provider.dart';
 import 'package:network/core/theme/theme_provider.dart';
 import 'package:network/presentation/login/screens/login_screen.dart';
 import 'package:network/presentation/main_screen.dart';
@@ -25,12 +26,15 @@ class _ApplicationState extends State<Application> {
   final _themeProvider = ThemeProvider();
   // Tạo instance của AuthProvider để quản lý authentication
   final _authProvider = AuthProvider();
+  // Tạo instance của PostProvider để quản lý bài viết do người dùng tạo
+  final _postProvider = PostProvider();
 
   // Hàm dispose - giải phóng tài nguyên khi widget bị hủy
   @override
   void dispose() {
     _themeProvider.dispose();
     _authProvider.dispose();
+    _postProvider.dispose();
     super.dispose();
   }
 
@@ -39,7 +43,11 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     // Sử dụng AnimatedBuilder để tự động rebuild khi theme thay đổi
     return AnimatedBuilder(
-      animation: Listenable.merge([_themeProvider, _authProvider]),
+      animation: Listenable.merge([
+        _themeProvider,
+        _authProvider,
+        _postProvider,
+      ]),
       builder: (context, child) {
         // Lấy theme hiện tại từ ThemeProvider
         final theme = _themeProvider.currentTheme;
@@ -90,6 +98,7 @@ class _ApplicationState extends State<Application> {
               ? MainScreen(
                   themeProvider: _themeProvider,
                   authProvider: _authProvider,
+                  postProvider: _postProvider,
                 )
               : LoginScreen(authProvider: _authProvider),
         );

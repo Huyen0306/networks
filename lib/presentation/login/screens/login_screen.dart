@@ -21,13 +21,14 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _errorMessage;
 
   void _showLoginSuccessToast() {
-    final cardStyle = context.theme.cardStyle.copyWith(
-      contentStyle: context.theme.cardStyle.contentStyle.copyWith(
-        titleTextStyle: context.theme.typography.sm.copyWith(
-          color: context.theme.colors.primary,
-          fontWeight: FontWeight.w600,
-        ),
+    final contentStyle = context.theme.cardStyle.contentStyle.copyWith(
+      titleTextStyle: context.theme.typography.sm.copyWith(
+        color: context.theme.colors.primary,
+        fontWeight: FontWeight.w600,
       ),
+    );
+    final cardStyle = context.theme.cardStyle.copyWith(
+      contentStyle: contentStyle,
     );
 
     showRawFToast(
@@ -45,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text('Chào mừng bạn quay lại.'),
             ),
             child: FButton(
+              style: FButtonStyle.primary(),
               child: const Text('Đóng'),
               onPress: () => toast.dismiss(),
             ),

@@ -23,4 +23,23 @@ class HomeService {
       queryParameters: {'q': query},
     );
   }
+
+  // Tạo bài viết mới
+  // Note: dummyjson.com không lưu thực sự, chỉ trả về response giả
+  Future<Response> createPost({
+    required String title,
+    required String body,
+    required int userId,
+    List<String>? tags,
+  }) async {
+    return await _dioClient.dio.post(
+      '/posts/add',
+      data: {
+        'title': title,
+        'body': body,
+        'userId': userId,
+        'tags': tags ?? [],
+      },
+    );
+  }
 }
