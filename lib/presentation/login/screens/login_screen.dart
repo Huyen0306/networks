@@ -86,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
         expiresInMins: 30,
       );
 
-      // Đăng nhập thành công
       final userData = response.data;
       await widget.authProvider.login(userData);
 
