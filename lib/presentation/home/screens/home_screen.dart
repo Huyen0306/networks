@@ -51,7 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       header: FHeader(
-        title: Text('Home', style: AppFonts.bbhBartle(fontSize: 40)),
+        title: Text(
+          'Home',
+          style: AppFonts.bbhBartle(
+            fontSize: 40,
+            color: context.theme.colors.primary,
+          ),
+        ),
         suffixes: [
           SizedBox(
             width: 220,

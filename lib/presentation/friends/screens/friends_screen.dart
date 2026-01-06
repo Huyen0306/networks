@@ -51,7 +51,13 @@ class _FriendsScreenState extends State<FriendsScreen> {
         ),
       ),
       header: FHeader(
-        title: Text('Friends', style: AppFonts.bbhBartle(fontSize: 40)),
+        title: Text(
+          'Friends',
+          style: AppFonts.bbhBartle(
+            fontSize: 40,
+            color: context.theme.colors.primary,
+          ),
+        ),
         suffixes: [
           SizedBox(
             width: 220,

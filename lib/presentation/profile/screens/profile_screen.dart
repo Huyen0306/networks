@@ -33,7 +33,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       header: FHeader(
-        title: Text('Profile', style: AppFonts.bbhBartle(fontSize: 40)),
+        title: Text(
+          'Profile',
+          style: AppFonts.bbhBartle(
+            fontSize: 40,
+            color: context.theme.colors.primary,
+          ),
+        ),
         suffixes: [UserAvatar(authProvider: widget.authProvider, size: 40.0)],
       ),
       child: SingleChildScrollView(
